@@ -5,4 +5,7 @@ gh extension install mona-actions/gh-repo-stats
 $env:GH_SOURCE_PAT="TOKEN"
 $env:SOURCE="SOURCE_ORG_NAME"
 # Generate inventory for your organization
-gh repo-stats --org $env:SOURCE --output inventory.csv --token $env:GH_SOURCE_PAT
+gh repo-stats `
+    --org $env:SOURCE `
+    --output inventory.csv `
+    --token $env:GH_SOURCE_PAT

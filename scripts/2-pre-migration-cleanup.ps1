@@ -1,4 +1,12 @@
-# 2-1. Find repositories with no activity in the last year
+# 2-1. Set environment variables
+$env:GH_SOURCE_PAT="SOURCE_PAT"
+$env:GH_PAT="DESTINATION_PAT"
+
+$env:SOURCE="SOURCE_ORG_NAME"
+$env:DESTINATION="DESTINATION_ORG_NAME"
+$env:ENTERPRISE="DESTINATION_ENTERPRISE_NAME"
+
+# 2-2. Find repositories with no activity in the last year
 gh api graphql -f query='
 query($org: String!, $cursor: String) {
   organization(login: $org) {
@@ -23,22 +31,23 @@ query($org: String!, $cursor: String) {
   select(.pushedAt < (now - 31536000 | todate)) | 
   .name'
 
-# 2-2. Find PRs older than 90 days with no recent activity
-$env:REPO="REPO_NAME"
+# 2-3. Find PRs older than 90 days with no recent activity
+$env:SOURCE_REPO="SOURCE_REPO_NAME"
 gh pr list `
-  --repo $env:SOURCE:/$env:REPO `
+  --repo $env:SOURCE/$env:SOURCE_REPO `
   --state open `
   --json number,title,updatedAt,author `
   --jq '.[] | select(.updatedAt < (now - 7776000 | todate))'
 
-# 2-3. Find issues with no activity in 6 months
+# 2-4. Find issues with no activity in 6 months
+$env:SOURCE_REPO="SOURCE_REPO_NAME"
 gh issue list `
-  --repo $env:SOURCE:/$env:REPO `
+  --repo $env:SOURCE/$env:SOURCE_REPO `
   --state open `
   --json number,title,updatedAt,labels `
   --jq '.[] | select(.updatedAt < (now - 15552000 | todate))'
 
-# 2-4. List unused branches (Mannual for each repo)
+# 2-5. List unused branches (Mannual for each repo)
 ## List merged branches (safe to delete)
 git branch -r --merged main | grep -v main | grep -v HEAD
 
@@ -51,13 +60,15 @@ for branch in $(git branch -r | grep -v HEAD); do
 done
 
 
-# 2-5. List integrations
+# 2-6. List integrations
+## Set GitHub token with appropriate permissions
+$env:GH_TOKEN="SOURCE_GITHUB_TOKEN" # with permissions to `admin:org_hook`
 ## List all webhooks in an organization
 gh api orgs/$env:SOURCE/hooks `
   --jq '.[] | {id, name, active, config: .config.url}'
 
 ## List current webhooks
-gh api orgs/YOUR_ORG/hooks `
+gh api orgs/$env:SOURCE/hooks `
   --jq '.[] | {
     id: .id,
     name: .name,
@@ -72,7 +83,7 @@ gh api orgs/$env:SOURCE/installations `
 
 
 ## List installed apps for an organization and create a report
-gh api orgs/YOUR_ORG/installations `
+gh api orgs/$env:SOURCE/installations `
   --jq '.installations[] | {
     app_slug: .app_slug,
     app_id: .app_id,
@@ -82,11 +93,11 @@ gh api orgs/YOUR_ORG/installations `
   }' > installed_apps.json
 
 
-# 2-6. List teams and members
+# 2-7. List teams and members
 ## List all teams and their member counts
 gh api orgs/$env:SOURCE/teams `
   --jq '.[] | {name, slug, members_count: .members_count}'
 
 ## List team members
-gh api orgs/$env:SOURCEG/teams/TEAM_SLUG/members `
+gh api orgs/$env:SOURCE/teams/TEAM_SLUG/members `
   --jq '.[].login'

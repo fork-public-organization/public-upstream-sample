@@ -1,3 +1,4 @@
 log/
 .github/
 local-*.ps1
+*.csv
