@@ -7,8 +7,8 @@
 > |------|------|
 > | [第 1 部分：探索與決策](Part1-Discovery&Decision.md) | 定義目標、評估適用性、取得共識 |
 > | [第 2 部分：遷移前準備](Part2-Pre-MigrationPreparation.md) | 盤點、清理、IdP 準備、使用者溝通 |
-> | [第 3 部分：身分識別與存取設定](Part3-Identity&Access%20Setup.md) | 設定 SCIM、佈建使用者、建立團隊 |
-> | [第 4 部分：安全性與合規性](Part4-Security&Compliance.md) | 稽核記錄、安全強化、CI/CD、整合 |
+> | [第 3 部分：身分識別與存取設定](Part3-Identity&Access-Setup.md) | 設定 SCIM、佈建使用者、建立團隊 |
+> | [第 4 部分：安全性與合規性](Part4-Security&Compliance.md)  | 稽核記錄、安全強化、整合 |
 > | **[第 5 部分：遷移執行](Part5-MigrationExecution.md)**（您在此處）| 執行 GEI、遷移儲存庫 |
 > | [第 6 部分：驗證與採用](Part6-Validation&Adoption.md) | 測試、使用者培訓、OSS 策略、正式上線 |
 
@@ -16,9 +16,7 @@
 
 # 第 5 階段：遷移執行
 
-*逐群組搬移儲存庫。*
-
-在安全政策就位且使用者已佈建之後，是時候開始遷移了。這個階段是反覆執行的——你需要針對每個團隊或儲存庫群組重複執行。從一個試驗群組開始，從經驗中學習，然後擴展。
+在安全政策就位且使用者已佈建之後即可開始遷移，這個階段是反覆執行的——需要針對每個團隊或儲存庫群組重複執行。從一個試驗群組開始，從經驗中學習，然後擴展。
 
 ## 遷移迴圈
 
@@ -50,7 +48,7 @@ flowchart TB
 
 ## GitHub 遷移工具
 
-GitHub 提供了多種遷移工具，取決於你的來源平台。
+GitHub 提供了多種遷移工具，取決於來源平台
 
 ### GitHub Enterprise Importer (GEI)
 
@@ -90,7 +88,7 @@ gh gei migrate-org \
 
 ### 處理 Mannequins
 
-當你使用 GEI 遷移時，使用者活動會被連結到稱為「Mannequins」的佔位身分。遷移後，你需要回收這些 Mannequins 並將它們歸屬到真正的 Managed User 帳號。
+當你使用 GEI 遷移時，使用者活動會被連結到稱為 **Mannequins** 的佔位身分。遷移後，你需要回收這些 Mannequins 並將它們歸屬到真正的 Managed User 帳號。
 
 流程請參閱 [Reclaiming mannequins for GitHub Enterprise Importer](https://docs.github.com/en/migrations/using-github-enterprise-importer/completing-your-migration-with-github-enterprise-importer/reclaiming-mannequins-for-github-enterprise-importer)。
 
@@ -129,7 +127,7 @@ EMU 遷移沒有簡單的「復原」按鈕。相應地做好計畫：
 > **📚 EMU 遷移指南系列導覽**
 >
 > ⬅️ **上一篇：[第 4 部分 - 安全性與合規性](Part4-Security&Compliance.md)**
+>
 > ➡️ **下一篇：[第 6 部分 - 驗證與採用](Part6-Validation&Adoption.md)**
 >
 > ---
-> *這是遷移至 GitHub Enterprise Managed Users 六部分系列的第 5 部分。覺得有幫助？給個 👍 並與你的團隊分享！有問題或我遺漏了什麼？請在下方留言。*
