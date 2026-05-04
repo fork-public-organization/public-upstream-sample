@@ -2,6 +2,12 @@
 
 本專案提供從標準 GitHub Enterprise Cloud (GHEC) 遷移至 GitHub Enterprise Managed Users (EMU) 環境的自動化腳本與指導文件，協助組織實現集中式身份管理、強化安全性與合規性。
 
+## Test for Demo PMA
+- Test for Demo PMA
+- Test for Demo PMA
+- Test for Demo PMA
+- Test for Demo PMA
+
 ## 專案結構
 
 ```
